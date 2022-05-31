@@ -7,7 +7,7 @@ import com.biologyapp_backend.plugins.setupSerialization
 import io.ktor.server.cio.CIO
 import io.ktor.server.engine.embeddedServer
 
-// "http://0.0.0.0:8080" - BaseUrl серверащ
+// "http://0.0.0.0:8080" - BaseUrl сервера
 
 fun main() {
     embeddedServer(CIO, port = 8080, host = "0.0.0.0") {

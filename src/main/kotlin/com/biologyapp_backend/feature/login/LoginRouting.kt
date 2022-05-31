@@ -3,6 +3,7 @@ package com.biologyapp_backend.feature.login
 import com.biologyapp_backend.cache.MemoryCash
 import com.biologyapp_backend.cache.TokenCache
 import com.biologyapp_backend.feature.login.model.LoginRequest
+import com.biologyapp_backend.feature.login.model.LoginResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.call
@@ -20,7 +21,7 @@ fun Application.configureLoginRouting() {
             if (MemoryCash.users.map { it.login }.contains(receive.login)) {
                 val token = UUID.randomUUID().toString()
                 MemoryCash.tokens.add(TokenCache(receive.login, token))
-                call.respond(HttpStatusCode.OK, token)
+                call.respond(HttpStatusCode.OK, LoginResponse(token))
                 return@post
             }
             call.respond(HttpStatusCode.NotFound, "User Not Found")

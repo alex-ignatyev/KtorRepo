@@ -5,6 +5,8 @@ import com.biologyapp_backend.cache.TokenCache
 import com.biologyapp_backend.feature.register.model.RegistrationRequest
 import com.biologyapp_backend.feature.register.model.RegistrationResponse
 import com.biologyapp_backend.utils.isValidEmail
+import com.biologyapp_backend.utils.isValidPassword
+import com.biologyapp_backend.utils.isValidRepeatPassword
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.call
@@ -26,6 +28,16 @@ fun Application.configureRegisterRouting() {
 
             if (MemoryCash.users.map { it.login }.contains(receive.login)) {
                 call.respond(HttpStatusCode.Conflict, "User already exists")
+                return@post
+            }
+
+            if (!receive.password.isValidPassword()){
+                call.respond(HttpStatusCode.Conflict, "Password is not valid")
+                return@post
+            }
+
+            if (!receive.repeatPassword.isValidRepeatPassword(receive.password)){
+                call.respond(HttpStatusCode.Conflict, "The entered passwords do not match")
                 return@post
             }
 
