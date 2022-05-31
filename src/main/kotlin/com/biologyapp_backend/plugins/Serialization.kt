@@ -9,7 +9,7 @@ import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 /**
  * Инициализация библиотеки serialization.kotlinx.json
  * */
-fun Application.configureSerialization() {
+fun Application.setupSerialization() {
     install(ContentNegotiation) {
         json()
     }

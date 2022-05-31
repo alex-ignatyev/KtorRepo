@@ -1,4 +1,4 @@
-package com.biologyapp_backend.plugins
+package com.biologyapp_backend.feature
 
 import io.ktor.server.application.Application
 import io.ktor.server.application.call
@@ -6,7 +6,7 @@ import io.ktor.server.response.respondText
 import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
 
-fun Application.configureRouting() {
+fun Application.configureTestRouting() {
 
     routing {
         get("/") {
