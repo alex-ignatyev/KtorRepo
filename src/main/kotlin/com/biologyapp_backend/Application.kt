@@ -3,6 +3,7 @@ package com.biologyapp_backend
 import com.biologyapp_backend.feature.configureTestRouting
 import com.biologyapp_backend.feature.login.configureLoginRouting
 import com.biologyapp_backend.feature.register.configureRegisterRouting
+import com.biologyapp_backend.feature.restore.configureRestorePasswordRouting
 import com.biologyapp_backend.plugins.setupSerialization
 import io.ktor.server.cio.CIO
 import io.ktor.server.engine.embeddedServer
@@ -16,5 +17,6 @@ fun main() {
         configureTestRouting()
         configureLoginRouting()
         configureRegisterRouting()
+        configureRestorePasswordRouting()
     }.start(wait = true)
 }
