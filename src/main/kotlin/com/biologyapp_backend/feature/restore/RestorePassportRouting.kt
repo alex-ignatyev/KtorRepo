@@ -30,20 +30,18 @@ fun Application.configureRestorePasswordRouting() {
                 return@post
             }
 
-            for (user in MemoryCash.users) {
-                if (user.login == receive.login) {
-                    val userWithRestorePassword = user.copy(
-                        password = receive.newPassword,
-                        repeatPassword = receive.repeatNewPassword
-                    )
-                    MemoryCash.users.remove(user)
-                    MemoryCash.users.add(userWithRestorePassword)
-                    call.respond(HttpStatusCode.OK, RegistrationResponse(updateAndGetToken(user.login)))
-                    println(MemoryCash.users)
-                    return@post
-                }
+            val desiredUser = MemoryCash.users.find { it.login == receive.login && it.email == receive.email }
+            if (desiredUser == null) {
+                call.respond(HttpStatusCode.NotFound, "User Not Found")
+                return@post
             }
-            call.respond(HttpStatusCode.NotFound, "User Not Found")
+            val userWithRestorePassword = desiredUser.copy(
+                password = receive.newPassword,
+                repeatPassword = receive.repeatNewPassword
+            )
+            MemoryCash.users.remove(desiredUser)
+            MemoryCash.users.add(userWithRestorePassword)
+            call.respond(HttpStatusCode.OK, RegistrationResponse(updateAndGetToken(desiredUser.login)))
         }
     }
 }
@@ -56,7 +54,6 @@ fun updateAndGetToken(userLogin: String): String {
             val userWithRestoreToken = user.copy(token = token)
             MemoryCash.tokens.remove(user)
             MemoryCash.tokens.add(userWithRestoreToken)
-            println(MemoryCash.tokens)
         }
     }
     return token
