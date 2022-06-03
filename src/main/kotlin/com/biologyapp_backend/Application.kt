@@ -5,13 +5,20 @@ import com.biologyapp_backend.feature.login.configureLoginRouting
 import com.biologyapp_backend.feature.register.configureRegisterRouting
 import com.biologyapp_backend.feature.restore.configureRestorePasswordRouting
 import com.biologyapp_backend.plugins.setupSerialization
-import io.ktor.server.cio.CIO
+import com.zaxxer.hikari.HikariConfig
+import com.zaxxer.hikari.HikariDataSource
 import io.ktor.server.engine.embeddedServer
-
-// "http://0.0.0.0:8080" - BaseUrl сервера
+import io.ktor.server.netty.Netty
+import org.jetbrains.exposed.sql.Database
 
 fun main() {
-    embeddedServer(CIO, port = 8080, host = "0.0.0.0") {
+    //TODO Почитать как работают HikariConfig и что это
+    val config = HikariConfig("hikari.properties")
+    val dataSource = HikariDataSource(config)
+    Database.connect(dataSource)
+
+    embeddedServer(Netty, port = System.getenv("PORT").toInt()) {
+    //embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
         setupSerialization()
 
         configureTestRouting()
