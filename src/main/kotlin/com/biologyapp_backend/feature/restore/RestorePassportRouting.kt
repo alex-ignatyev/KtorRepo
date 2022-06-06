@@ -3,6 +3,7 @@ package com.biologyapp_backend.feature.restore
 import com.biologyapp_backend.cache.MemoryCash
 import com.biologyapp_backend.feature.register.model.RegistrationResponse
 import com.biologyapp_backend.feature.restore.model.RestorePassportRequest
+import com.biologyapp_backend.utils.generateUUID
 import com.biologyapp_backend.utils.isValidPassword
 import com.biologyapp_backend.utils.isValidRepeatPassword
 import io.ktor.http.HttpStatusCode
@@ -12,7 +13,6 @@ import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
-import java.util.UUID
 
 fun Application.configureRestorePasswordRouting() {
 
@@ -50,7 +50,7 @@ fun updateAndGetToken(userLogin: String): String {
     var token = ""
     for (user in MemoryCash.tokens) {
         if (userLogin == user.login) {
-            token = UUID.randomUUID().toString()
+            token = generateUUID()
             val userWithRestoreToken = user.copy(token = token)
             MemoryCash.tokens.remove(user)
             MemoryCash.tokens.add(userWithRestoreToken)
