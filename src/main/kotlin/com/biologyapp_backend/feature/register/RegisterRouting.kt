@@ -4,6 +4,7 @@ import com.biologyapp_backend.cache.MemoryCash
 import com.biologyapp_backend.cache.TokenCache
 import com.biologyapp_backend.feature.register.model.RegistrationRequest
 import com.biologyapp_backend.feature.register.model.RegistrationResponse
+import com.biologyapp_backend.utils.generateUUID
 import com.biologyapp_backend.utils.isValidEmail
 import com.biologyapp_backend.utils.isValidPassword
 import com.biologyapp_backend.utils.isValidRepeatPassword
@@ -41,7 +42,7 @@ fun Application.configureRegisterRouting() {
                 return@post
             }
 
-            val token = UUID.randomUUID().toString()
+            val token = generateUUID()
             MemoryCash.users.add(receive)
             MemoryCash.tokens.add(TokenCache(receive.login, token))
             call.respond(HttpStatusCode.OK, RegistrationResponse(token))

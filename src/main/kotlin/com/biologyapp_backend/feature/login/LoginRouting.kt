@@ -4,6 +4,7 @@ import com.biologyapp_backend.cache.MemoryCash
 import com.biologyapp_backend.cache.TokenCache
 import com.biologyapp_backend.feature.login.model.LoginRequest
 import com.biologyapp_backend.feature.login.model.LoginResponse
+import com.biologyapp_backend.utils.generateUUID
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.call
@@ -19,7 +20,7 @@ fun Application.configureLoginRouting() {
         post("/login") {
             val receive = call.receive<LoginRequest>()
             if (MemoryCash.users.map { it.login }.contains(receive.login)) {
-                val token = UUID.randomUUID().toString()
+                val token = generateUUID()
                 MemoryCash.tokens.add(TokenCache(receive.login, token))
                 call.respond(HttpStatusCode.OK, LoginResponse(token))
                 return@post
