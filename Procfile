@@ -1,1 +1,1 @@
-web: .\build\install\com.biologyapp.biologyapp_backend\bin\com.biologyapp.biologyapp_backend
+web: build\install\com.biologyapp.biologyapp_backend\bin\com.biologyapp.biologyapp_backend
