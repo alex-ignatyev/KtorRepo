@@ -24,7 +24,8 @@ class DAOFacadeImpl : DAOFacade {
 
     override suspend fun addUser(user: User): Unit = dbQuery {
         val insertStatement = Users.insert {
-            it[id] = UUID.randomUUID()
+            val uuid = UUID.randomUUID()
+            it[id] = uuid
             it[login] = user.login
             it[email] = user.email
             it[password] = user.password
