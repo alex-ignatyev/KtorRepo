@@ -3,7 +3,7 @@ package com.biologyapp_backend.db.table
 import org.jetbrains.exposed.sql.Table
 
 object Users : Table() {
-    val id = integer("id").uniqueIndex()
+    val id = uuid("id").autoGenerate()
     val login = varchar("login", 12)
     val email = varchar("email", 12)
     val password = varchar("password", 12)

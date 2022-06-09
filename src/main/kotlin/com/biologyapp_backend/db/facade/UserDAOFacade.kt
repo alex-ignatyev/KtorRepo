@@ -9,6 +9,7 @@ import org.jetbrains.exposed.sql.selectAll
 
 class DAOFacadeImpl : DAOFacade {
     private fun resultRowToUser(row: ResultRow) = User(
+        id = row[Users.id].toString(),
         login = row[Users.login],
         email = row[Users.email],
         password = row[Users.password],
@@ -22,6 +23,7 @@ class DAOFacadeImpl : DAOFacade {
 
     override suspend fun addUser(user: User): Unit = dbQuery {
         val insertStatement = Users.insert {
+            it[id] = id
             it[login] = user.login
             it[email] = user.email
             it[password] = user.password
