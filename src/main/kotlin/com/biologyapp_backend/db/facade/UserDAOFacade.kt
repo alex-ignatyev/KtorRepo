@@ -3,6 +3,7 @@ package com.biologyapp_backend.db.facade
 import com.biologyapp_backend.db.model.User
 import com.biologyapp_backend.db.table.Users
 import com.biologyapp_backend.utils.dbQuery
+import java.util.UUID
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
@@ -23,7 +24,7 @@ class DAOFacadeImpl : DAOFacade {
 
     override suspend fun addUser(user: User): Unit = dbQuery {
         val insertStatement = Users.insert {
-            it[id] = id
+            it[id] = UUID.randomUUID()
             it[login] = user.login
             it[email] = user.email
             it[password] = user.password
